@@ -95,7 +95,10 @@
                                         >Type of Vehicle</td>
                                 <td
                                             style="text-align:center;background-color: #E0EBEB;"
-                                        >New Engine #</td>
+                                        >Old Engine </td>
+                                <td
+                                            style="text-align:center;background-color: #E0EBEB;"
+                                        >New Engine </td>
                                 <td
                                             style="text-align:center;background-color: #E0EBEB;"
                                         >Change Date</td>
@@ -123,6 +126,9 @@
                                     <td style="text-align:center;"><span
                                                     t-esc="line.get('vehicle_type', '')"
                                                 /></td>
+                                    <td style="text-align:center;"><span
+                                                    t-esc="line.get('old_engine', '')"
+                                                /></td>    
                                     <td style="text-align:center;"><span
                                                     t-esc="line.get('new_engine', '')"
                                                 /></td>

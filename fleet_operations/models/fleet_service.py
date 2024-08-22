@@ -350,7 +350,7 @@ class FleetVehicleLogServices(models.Model):
                 )
                 move._action_confirm()
                 move._action_assign()
-                move.move_line_ids.write({"qty_done": part.qty})
+                move.move_line_ids.update({"quantity": part.qty})
                 move._action_done()
         return True
 

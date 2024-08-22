@@ -1,12 +1,11 @@
-# See LICENSE file for full copyright and licensing details.
-"""Vehicle Change History Report."""
+# # See LICENSE file for full copyright and licensing details.
+# """Vehicle Change History Report."""
 
 import time
 
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.tools import format_date
-
 
 class VehicalChangeHistoryReport(models.AbstractModel):
     """Vehicle change history report."""
@@ -16,11 +15,13 @@ class VehicalChangeHistoryReport(models.AbstractModel):
 
     def get_vehicle_history(self, date_range):
         """Method to get vehicle history."""
-        engine_obj = self.env["engine.history"]
-        color_obj = self.env["color.history"]
-        tire_obj = self.env["tire.history"]
-        battery_obj = self.env["battery.history"]
-        vin_obj = self.env["vin.history"]
+        models_to_check = {
+            "engine_history": self.env["engine.history"],
+            "color_history": self.env["color.history"],
+            "tire_history": self.env["tire.history"],
+            "battery_history": self.env["battery.history"],
+            "vin_history": self.env["vin.history"],
+        }
         domain = []
         if date_range.get("date_from"):
             domain += [("changed_date", ">=", date_range.get("date_from"))]
@@ -29,73 +30,59 @@ class VehicalChangeHistoryReport(models.AbstractModel):
         if date_range.get("fleet_id"):
             domain += [("vehicle_id", "=", date_range.get("fleet_id"))]
 
-        engine_ids = engine_obj.search(domain)
-        color_ids = color_obj.search(domain)
-        tire_ids = tire_obj.search(domain)
-        battery_ids = battery_obj.search(domain)
-        vin_ids = vin_obj.search(domain)
         vehicle_change_history = []
-        changed_date = False
-        work_order_date = False
-        if (
-            engine_ids
-            and date_range.get("report") == "engine_history"
-            or color_ids
-            and date_range.get("report") == "color_history"
-            or tire_ids
-            and date_range.get("report") == "tire_history"
-            or battery_ids
-            and date_range.get("report") == "battery_history"
-            or vin_ids
-        ):
-            for engine_rec in (
-                engine_ids or color_ids or tire_ids or battery_ids or vin_ids
-            ):
-                seq = engine_rec.vehicle_id and engine_rec.vehicle_id.name or ""
-                if engine_rec.changed_date:
+        for report_type, model_obj in models_to_check.items():
+            if date_range.get("report") == report_type:
+                records = model_obj.search(domain)
+                for rec in records:
+                    seq = rec.vehicle_id and rec.vehicle_id.name or ""
                     changed_date = format_date(
                         self.env,
-                        engine_rec.changed_date,
+                        rec.changed_date,
                         self._context.get("lang"),
                         date_format=False,
-                    )
-                if engine_rec.workorder_id and engine_rec.workorder_id.date_close:
+                    ) if rec.changed_date else False
+
                     work_order_date = format_date(
                         self.env,
-                        engine_rec.workorder_id.date_close,
+                        rec.workorder_id.date_close,
                         self._context.get("lang"),
                         date_format=False,
-                    )
+                    ) if rec.workorder_id and rec.workorder_id.date_close else False
 
-                values = {
-                    "description": seq,
-                    "vehicle_type": engine_rec.vehicle_id
-                    and engine_rec.vehicle_id.vechical_type_id
-                    and engine_rec.vehicle_id.vechical_type_id.name
-                    or "",
-                    "color_id": engine_rec.vehicle_id
-                    and engine_rec.vehicle_id.vehical_color_id
-                    and engine_rec.vehicle_id.vehical_color_id.name
-                    or "",
-                    "vin": engine_rec.vehicle_id and engine_rec.vehicle_id.vin_sn or "",
-                    "plate": engine_rec.vehicle_id
-                    and engine_rec.vehicle_id.license_plate
-                    or "",
-                    "old_engine": engine_rec.previous_engine_no or "",
-                    "new_engine": engine_rec.new_engine_no or "",
-                    "old_color": "",
-                    "new_color": "",
-                    "old_vin": "",
-                    "new_vin": "",
-                    "change_date": changed_date if changed_date else False,
-                    "work_order": engine_rec.workorder_id
-                    and engine_rec.workorder_id.name
-                    or "",
-                    "wo_close_date": work_order_date if work_order_date else False,
-                    "remarks": engine_rec.note or "",
-                    "seq": seq + "a",
-                }
-                vehicle_change_history.append(values)
+                    values = {
+                        "description": seq,
+                        "vehicle_type": rec.vehicle_id
+                        and rec.vehicle_id.vechical_type_id
+                        and rec.vehicle_id.vechical_type_id.name
+                        or "",
+                        "color_id": rec.vehicle_id
+                        and rec.vehicle_id.vehical_color_id
+                        and rec.vehicle_id.vehical_color_id.name
+                        or "",
+                        "vin": rec.vehicle_id and rec.vehicle_id.vin_sn or "",
+                        "plate": rec.vehicle_id
+                        and rec.vehicle_id.license_plate
+                        or "",
+                        "new_engine": rec.new_engine_no if report_type == "engine_history" else "",
+                        "old_engine": rec.previous_engine_no if report_type == "engine_history" else "",
+                        "new_color": rec.current_color_id.name if report_type == "color_history" else "",
+                        "old_color": rec.previous_color_id.name if report_type == "color_history" else "",
+                        'new_tire': rec.new_tire_size if report_type == "tire_history" else "",
+                        'old_tire': rec.previous_tire_size if report_type == "tire_history" else "",
+                        'new_battery': rec.new_battery_size if report_type == "battery_history" else "", 
+                        'old_battery': rec.previous_battery_size if report_type == "battery_history" else "",
+                        "old_vin": "",
+                        "new_vin": "",
+                        "change_date": changed_date,
+                        "work_order": rec.workorder_id
+                        and rec.workorder_id.name
+                        or "",
+                        "wo_close_date": work_order_date,
+                        "remarks": rec.note or "",
+                        "seq": seq + "a",
+                    }
+                    vehicle_change_history.append(values)
 
         if vehicle_change_history:
             vehicle_change_history = sorted(
