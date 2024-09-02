@@ -154,9 +154,15 @@ class FleetVehicleLogServices(models.Model):
             if not invoice:
                 return
 
-            move_reversal = self.env['account.move.reversal'].with_context(active_model="account.move", active_ids=invoice.ids).create({
-                'journal_id': invoice[0].journal_id.id,
-            })
+            move_reversal = (
+                self.env["account.move.reversal"]
+                .with_context(active_model="account.move", active_ids=invoice.ids)
+                .create(
+                    {
+                        "journal_id": invoice[0].journal_id.id,
+                    }
+                )
+            )
             return move_reversal.refund_moves()
 
     def action_confirm(self):

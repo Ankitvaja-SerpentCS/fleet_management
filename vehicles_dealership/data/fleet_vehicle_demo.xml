@@ -6,8 +6,8 @@
         <field name="list_price">320.0</field>
         <field name="detailed_type">consu</field>
         <field name="weight">0.01</field>
-        <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <record id="product_product_fleet_2" model="product.product">
@@ -16,8 +16,8 @@
         <field name="list_price">320.0</field>
         <field name="detailed_type">consu</field>
         <field name="weight">0.01</field>
-        <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <record id="product_product_fleet_3" model="product.product">
@@ -26,8 +26,8 @@
         <field name="list_price">320.0</field>
         <field name="detailed_type">consu</field>
         <field name="weight">0.01</field>
-        <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <record id="product_product_fleet_4" model="product.product">
@@ -36,8 +36,8 @@
         <field name="list_price">320.0</field>
         <field name="detailed_type">consu</field>
         <field name="weight">0.01</field>
-        <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <record id="product_product_fleet_5" model="product.product">
@@ -46,27 +46,27 @@
         <field name="list_price">320.0</field>
         <field name="detailed_type">consu</field>
         <field name="weight">0.01</field>
-        <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <record id="fleet.vehicle_1" model="fleet.vehicle">
-        <field name="product_id" ref="product_product_fleet_1"/>
+        <field name="product_id" ref="product_product_fleet_1" />
     </record>
 
     <record id="fleet.vehicle_2" model="fleet.vehicle">
-        <field name="product_id" ref="product_product_fleet_2"/>
+        <field name="product_id" ref="product_product_fleet_2" />
     </record>
 
     <record id="fleet.vehicle_3" model="fleet.vehicle">
-         <field name="product_id" ref="product_product_fleet_3"/>
+         <field name="product_id" ref="product_product_fleet_3" />
     </record>
 
     <record id="fleet.vehicle_4" model="fleet.vehicle">
-        <field name="product_id" ref="product_product_fleet_4"/>
+        <field name="product_id" ref="product_product_fleet_4" />
     </record>
 
     <record id="fleet.vehicle_5" model="fleet.vehicle">
-        <field name="product_id" ref="product_product_fleet_5"/>
+        <field name="product_id" ref="product_product_fleet_5" />
     </record>
 </odoo>

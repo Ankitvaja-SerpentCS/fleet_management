@@ -61,7 +61,7 @@ class FleetVehicle(models.Model):
     """Fleet Vehicle model."""
 
     _inherit = "fleet.vehicle"
-    _inherits = {'product.product': 'product_id'}
+    _inherits = {"product.product": "product_id"}
 
     product_id = fields.Many2one(
         "product.product", "Product", ondelete="cascade", required=True

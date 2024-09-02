@@ -429,7 +429,7 @@ class FleetRent(models.Model):
 
     def action_rent_close(self):
         """Method to Change rent state to close."""
-        if not self.rent_schedule_ids.invc_id.payment_state == 'paid':
+        if not self.rent_schedule_ids.invc_id.payment_state == "paid":
             raise UserError(_("Can't close the vehicle rent without Payment!"))
         return {
             "name": _("Rent Close Form"),
