@@ -16,7 +16,7 @@
                     />
                     <field
                         name="previous_color_id"
-                        string="Previous Engine No"
+                        string="Previous Color"
                         readonly="temp_bool "
                     />
                     <field

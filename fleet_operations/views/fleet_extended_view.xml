@@ -548,7 +548,7 @@
                          </group>
                     </page>
                     <page string="Features">
-                        <group string="">
+                        <group>
                             <group string="Tire Detail">
                                 <field
                                     name="tire_size"
@@ -600,7 +600,7 @@
                                             readonly="state in ('write-off')"
                                         />
                                     </group>
-                                    <group col="2" string="Capacity">
+                                    <group col="2" string="Capacity" invisible = "1">
                                         <field
                                             name="seats"
                                             readonly="state in ('write-off')"
@@ -627,6 +627,7 @@
                                         name="doors"
                                         string="No of Doors"
                                         readonly="state in ('write-off')"
+                                        invisible = "1"
                                     />
                                 </group>
                             </page>

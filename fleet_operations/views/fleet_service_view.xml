@@ -325,46 +325,16 @@
 
                  </page>
                  <page string="Parts Used">
-                      <group>
-                          <field name="total_parts_line" />
-                      </group>
-                      <newline />
-                      <group colspan="4">
-                         <field
-                                name="parts_ids"
-                                context="{'date_open':date_open}"
-                                create='false'
-                                delete='false'
-                                readonly="state in ('draft','done')"
-                            >
-                             <tree>
-                                 <field
-                                        name='product_id'
-                                        string="Part No"
-                                        required="1"
-                                        readonly="is_deliver"
-                                        options="{'no_open': True, 'create': false, 'create_edit': false}"
-                                    />
-                                 <field name="qty_hand" readonly="1" force_save="1" />
-                                 <field name='qty' required="1" readonly="is_deliver" />
-                                 <field
-                                        name='product_uom'
-                                        readonly="is_deliver"
-                                        required="1"
-                                    />
-                                 <field name='price_unit' readonly="is_deliver" />
-                                 <field name='total' readonly="1" force_save="1" />
-                                 <field name="date_issued" />
-                                 <field
-                                        name="issued_by"
-                                        string="Issued By"
-                                        readonly="1"
-                                        options="{'no_open': True, 'create': false, 'create_edit': false}"
-                                    />
-                                 <field name="is_deliver" invisible="1" />
-                             </tree>
-                            <form string="Maintenance">
-                                 <group>
+                        <div>
+                            <field
+                                    name="parts_ids"
+                                    nolable = "1"
+                                    context="{'date_open':date_open}"
+                                    create='false'
+                                    delete='false'
+                                    readonly="state in ('draft','done')"
+                                >
+                                <tree>
                                     <field
                                             name='product_id'
                                             string="Part No"
@@ -372,16 +342,8 @@
                                             readonly="is_deliver"
                                             options="{'no_open': True, 'create': false, 'create_edit': false}"
                                         />
-                                    <field
-                                            name="qty_hand"
-                                            readonly="1"
-                                            force_save="1"
-                                        />
-                                    <field
-                                            name='qty'
-                                            required="1"
-                                            readonly="is_deliver"
-                                        />
+                                    <field name="qty_hand" readonly="1" force_save="1" />
+                                    <field name='qty' required="1" readonly="is_deliver" />
                                     <field
                                             name='product_uom'
                                             readonly="is_deliver"
@@ -397,20 +359,57 @@
                                             options="{'no_open': True, 'create': false, 'create_edit': false}"
                                         />
                                     <field name="is_deliver" invisible="1" />
-                                </group>
-                            </form>
-                         </field>
-                     </group>
-                     <group class="oe_subtotal_footer oe_right" col="2">
-                         <div class="oe_subtotal_footer_separator oe_inline">
-                             <label for="sub_total" />
-                         </div>
-                         <field
-                                name="sub_total"
-                                nolabel="1"
-                                class="oe_subtotal_footer_separator"
+                                </tree>
+                                <form string="Maintenance">
+                                    <group>
+                                        <field
+                                                name='product_id'
+                                                string="Part No"
+                                                required="1"
+                                                readonly="is_deliver"
+                                                options="{'no_open': True, 'create': false, 'create_edit': false}"
+                                            />
+                                        <field
+                                                name="qty_hand"
+                                                readonly="1"
+                                                force_save="1"
+                                            />
+                                        <field
+                                                name='qty'
+                                                required="1"
+                                                readonly="is_deliver"
+                                            />
+                                        <field
+                                                name='product_uom'
+                                                readonly="is_deliver"
+                                                required="1"
+                                            />
+                                        <field name='price_unit' readonly="is_deliver" />
+                                        <field name='total' readonly="1" force_save="1" />
+                                        <field name="date_issued" />
+                                        <field
+                                                name="issued_by"
+                                                string="Issued By"
+                                                readonly="1"
+                                                options="{'no_open': True, 'create': false, 'create_edit': false}"
+                                            />
+                                        <field name="is_deliver" invisible="1" />
+                                    </group>
+                                </form>
+                            </field>
+                        </div>
+                     <group name="note_group" col="6" class="mt-2 mt-md-0">
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="total_parts_line" style="font-weight: bold; font-size: 20px;"/>
+                        </group>
+                        <newline />
+                        <group class="oe_subtotal_footer oe_right">
+                            <field 
+                                name="sub_total" 
+                                nolabel="0"
                                 widget="monetary"
-                            />
+                                style="font-weight: bold; font-size: 24px;"/>
+                        </group>
                      </group>
                  </page>
                  <page string="Attachments">

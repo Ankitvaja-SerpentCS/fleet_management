@@ -290,15 +290,15 @@ class FleetVehicleLogServices(models.Model):
                     "type": "ir.actions.act_window",
                     "target": "new",
                 }
-
+            next_ser_date =  self.next_service_date or fields.Date.today()
             work_order_vals = {
                 "state": "done",
                 "next_service_odometer": odometer_increment + work_order.odometer,
                 "already_closed": True,
                 "closed_by": self.env.user,
-                "date_close": fields.Date.today(),
+                "date_close": next_ser_date,
                 "next_service_date": (
-                    fields.Date.today() + timedelta(days=next_service_day_ids[0].days)
+                    next_ser_date + timedelta(days=next_service_day_ids[0].days)
                 ),
             }
             work_order.write(work_order_vals)
@@ -311,8 +311,7 @@ class FleetVehicleLogServices(models.Model):
                         or False,
                         "last_service_date": fields.Date.today(),
                         "next_service_date": (
-                            fields.Date.today()
-                            + timedelta(days=next_service_day_ids[0].days)
+                            next_ser_date + timedelta(days=next_service_day_ids[0].days)
                         ),
                         "due_odometer": odometer_increment,
                         "due_odometer_unit": work_order.odometer_unit,
@@ -356,7 +355,7 @@ class FleetVehicleLogServices(models.Model):
                 )
                 move._action_confirm()
                 move._action_assign()
-                move.move_line_ids.write({"qty_done": part.qty})
+                move.move_line_ids.update({"quantity": part.qty})
                 move._action_done()
         return True
 
