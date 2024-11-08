@@ -290,7 +290,7 @@ class FleetVehicleLogServices(models.Model):
                     "type": "ir.actions.act_window",
                     "target": "new",
                 }
-            next_ser_date =  self.next_service_date or fields.Date.today()
+            next_ser_date = self.next_service_date or fields.Date.today()
             work_order_vals = {
                 "state": "done",
                 "next_service_odometer": odometer_increment + work_order.odometer,
@@ -959,7 +959,7 @@ class FleetWorkOrderSearch(models.TransientModel):
         return {
             "name": _("Work Order"),
             "view_type": "form",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "fleet.vehicle.log.services",
             "type": "ir.actions.act_window",
             "domain": [("id", "=", self.work_order_id.id)]
